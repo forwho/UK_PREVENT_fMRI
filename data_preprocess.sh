@@ -42,6 +42,7 @@ data_reorganise()
             init_group=$group
             mkdir d$ata_path/subset_${init_group}
             mv $data_path/${subs[$i]} $data_path/subset_${init_group}
+            echo '{"dataset": "uk prefent"}' > $data_path/subset_${init_group}/dataset_description.json
         fi
     done
 }
