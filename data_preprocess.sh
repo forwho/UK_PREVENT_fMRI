@@ -9,12 +9,14 @@ data_organise()
     for i in `seq 0 $endvalue`
     do
         sub=${fmris[$i]}
-        subname=${sub:3:5}
+        tmp_sub=${sub##*/}
+        subname=${tmp_sub:3:5}
         mkdir -p $target_path/$subname/anat
         mkdir -p $target_path/$subname/bold
         cp $sub $target_path/$subname/bold/sub-${subname}_bold.nii.gz
         cp ${sub%%.*}.json $target_path/$subname/bold/sub-${subname}_bold.json
-        t1file=`ls ${sub%/*}/T1w_MR*${subname}*.nii`
+        t1file=`ls $raw_path/MRI/T1w_MR*${subname}*.nii`
         cp $t1file $target_path/$subname/anat/sub-${subname}_t1w.nii
     done
 }
+data_organise
