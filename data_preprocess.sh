@@ -49,6 +49,7 @@ data_reorganise()
             mkdir $data_path/subset_${init_group}
             echo '{"Name": "Example dataset", "BIDSVersion": "1.0.2"}' > $data_path/subset_${init_group}/dataset_description.json
             mv $data_path/${subs[$i]} $data_path/subset_${init_group}
+            echo '{"dataset": "uk prefent"}' > $data_path/subset_${init_group}/dataset_description.json
         fi
     done
 }
