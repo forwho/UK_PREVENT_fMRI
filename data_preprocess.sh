@@ -94,9 +94,9 @@ data_preprocess()
     singularity run $simg_path/fmriprep.simg --skip_bids_validation --fs-license-file $simg_path/freesurfer/license.txt --fs-no-reconall -w $working_path/$subset $raw_path/$subset $preprocessing_path/$subset participant
     for sub in `ls $preprocessing_path/$subset`
     do
-        #singularity run $simg_path/afni.simg 3dDespike -prefix $preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-despike_bold.nii.gz $preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+        singularity run $simg_path/afni.simg 3dDespike -prefix $preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-despike_bold.nii.gz $preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
 
-        python -c "from preprocess import clean_data;clean_data(\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz\",\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz\",\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_desc-confounds_timeseries.tsv\",2,\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-reg_bold.nii.gz\")"
+        python -c "from preprocess import clean_data;clean_data(\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-despike_bold.nii.gz\",\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz\",\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_desc-confounds_timeseries.tsv\",2,\"$preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-reg_bold.nii.gz\")"
 
         singularity run $simg_path/afni.simg 3dBlurToFWHM -prefix $preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-smooth_bold.nii.gz -mask $preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz -FWHM 8 $preprocessing_path/$subset/$sub/func/${sub}_task-rest_space-MNI152NLin2009cAsym_desc-reg_bold.nii.gz
     done
@@ -105,6 +105,6 @@ data_preprocess()
 #data_organise
 #data_reorganise 11
 #subset=subset_52
-#data_preprocess $subset
+data_preprocess $subset
 #data_reorganise2
-data_check
+#data_check
